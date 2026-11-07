@@ -10,3 +10,5 @@ redis>=5,<7
 django-otp>=1.6,<2
 Pillow>=11,<13
 gunicorn>=22.0.0
+whitenoise>=6.9,<7
+django-storages[s3]>=1.14,<2
