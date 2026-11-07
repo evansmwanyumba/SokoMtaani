@@ -51,6 +51,14 @@ DATABASE_URL=postgresql://sokomtaani:your-password@127.0.0.1:5432/sokomtaani
 
 The local email backend prints verification and password-reset links to the development server console. Configure a real email provider using `EMAIL_BACKEND`, `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, and TLS settings before deployment. Development uses an in-process cache for throttling; production requires `REDIS_URL` so login and other anonymous request throttles are shared across web workers. Never commit `.env`.
 
+## Deploy to Render
+
+The repository-root `render.yaml` provisions a Render web service, PostgreSQL database and Redis key-value instance. In Render, create a Blueprint from the repository and review the paid service/database plans before applying it. The web service installs dependencies, collects static files, runs migrations before deploy, and starts Gunicorn.
+
+The blueprint defaults to `https://sokomtaani.vercel.app` for the frontend. Update `FRONTEND_BASE_URL`, `CORS_ALLOWED_ORIGINS`, and `CSRF_TRUSTED_ORIGINS` in the Render service environment to the actual Vercel production origin (scheme included, no trailing slash). If the Render service name changes, update `DJANGO_ALLOWED_HOSTS` and the API URL in `frontend/assets/js/config.js` as well. If a custom frontend domain is used, add that origin to all three frontend-origin settings. The blueprint enables secure cross-site session/CSRF cookies for the separate Vercel and Render domains.
+
+Configure a production email provider before launch. The backend can store uploaded product images, avatars, and message attachments in an S3-compatible bucket by setting `AWS_STORAGE_BUCKET_NAME`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_S3_REGION_NAME`; optionally set `AWS_S3_ENDPOINT_URL` and `AWS_S3_CUSTOM_DOMAIN` for an S3-compatible provider. The bucket remains private and generated media URLs are signed. Do this before accepting real uploads: Render's local filesystem is ephemeral. Keep the generated `DJANGO_SECRET_KEY` private and never copy local `.env` secrets into source control.
+
 ## Migrate and run
 
 ```bash

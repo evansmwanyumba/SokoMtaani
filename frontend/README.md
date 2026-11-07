@@ -21,6 +21,10 @@ python3 -m http.server 5500 --directory frontend
 
 Open [http://127.0.0.1:5500](http://127.0.0.1:5500). Configure the API host only in `assets/js/config.js`. The default is `http://127.0.0.1:8000/api/v1`. API errors are displayed; the UI never falls back to fixtures. Empty product and category databases therefore show real empty states until actual records are created.
 
+## Deploy to Vercel
+
+Import the repository into Vercel and set the project root directory to `frontend`; the app is static and needs no build command. The production API defaults to `https://sokomtaani-api.onrender.com/api/v1`, matching the included Render Blueprint. To use a differently named Render service, update the API URL in `assets/js/config.js` before deployment. For local or custom deployments, set `window.SOKO_API_BASE_URL` before `config.js` loads to override the default. Configure the exact Vercel production origin in the Render service's `FRONTEND_BASE_URL`, `CORS_ALLOWED_ORIGINS`, and `CSRF_TRUSTED_ORIGINS` variables.
+
 The app uses hash routing (`/#/search`, `/#/verify-email?...`) for static hosting. Authentication uses Django's HttpOnly session cookie and CSRF protection; no password or authentication token is stored in browser storage. Configure the frontend origin in Django's `CORS_ALLOWED_ORIGINS` and `CSRF_TRUSTED_ORIGINS`.
 Local asset URLs carry a cache version in `index.html`; increment its `v` value when publishing changed frontend assets so browsers don't reuse an older API configuration or JavaScript bundle. A `304 Not Modified` for a static asset is a normal browser-cache response, not an account-creation result.
 

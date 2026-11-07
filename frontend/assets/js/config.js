@@ -1,5 +1,9 @@
 window.SOKO_CONFIG = Object.freeze({
-  API_BASE_URL: "http://127.0.0.1:8001/api/v1",
+  API_BASE_URL: window.SOKO_API_BASE_URL || (
+    ["localhost", "127.0.0.1"].includes(window.location.hostname)
+      ? "http://127.0.0.1:8000/api/v1"
+      : "https://sokomtaani-api.onrender.com/api/v1"
+  ),
   REQUEST_TIMEOUT_MS: 12000,
   CURRENCY: "KES",
   DEFAULT_LOCATION: "Nairobi",
