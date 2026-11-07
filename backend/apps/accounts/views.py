@@ -115,6 +115,7 @@ class CsrfTokenView(APIView):
 
 @method_decorator(never_cache, name="dispatch")
 class RegistrationView(APIView):
+    authentication_classes = ()
     permission_classes = (AllowAny,)
     throttle_classes = (AnonRateThrottle, ScopedRateThrottle)
     throttle_scope = "register"
