@@ -96,10 +96,6 @@ DATABASES = {
 }
 
 REDIS_URL = os.getenv("REDIS_URL", "").strip()
-if not DEBUG and not REDIS_URL:
-    raise ImproperlyConfigured(
-        "Set REDIS_URL in production so authentication throttles are shared across workers."
-    )
 CACHES = (
     {
         "default": {
@@ -111,7 +107,7 @@ CACHES = (
     else {
         "default": {
             "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-            "LOCATION": "sokomtaani-development",
+            "LOCATION": "sokomtaani-production" if not DEBUG else "sokomtaani-development",
         }
     }
 )
