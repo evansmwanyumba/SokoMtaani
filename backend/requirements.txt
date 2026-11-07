@@ -1,0 +1,11 @@
+Django>=5.2,<6.1
+djangorestframework>=3.16,<3.18
+drf-spectacular>=0.28,<0.29
+django-cors-headers>=4.7,<5
+dj-database-url>=2.3,<3
+python-dotenv>=1,<2
+psycopg[binary]>=3.2,<4
+argon2-cffi>=23.1,<26
+redis>=5,<7
+django-otp>=1.6,<2
+Pillow>=11,<13
